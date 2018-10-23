@@ -64,7 +64,7 @@ data_gen_args = dict(
 # # Predict XY
 # testGene = testGenerator(os.path.join(dataset_folder, 'em_test/crop_256/raw_xy_10/'), num_image=64, target_size=(256, 256))
 # model = unet(input_size=(256, 256, 1))
-# model.load_weights(os.path.join(experiment_folder, 'unet_membrane_xy_10.h5'))
+# model.load_weights(os.path.join(experiment_folder, 'unet_membrane_xy.h5'))
 # results = model.predict_generator(testGene, 64, verbose=1)
 # if not os.path.exists(os.path.join(experiment_folder, 'result_unet_xy_10')):
 #     os.mkdir(os.path.join(experiment_folder, 'result_unet_xy_10'))
@@ -80,12 +80,69 @@ data_gen_args = dict(
 #     os.mkdir(os.path.join(experiment_folder, 'result_unet_xz_10'))
 # saveResult(os.path.join(experiment_folder, 'result_unet_xz_10'), results)
 
-# Predict ZY
-testGene = testGenerator(os.path.join(dataset_folder, 'em_test/crop_256/raw_zy_10/'),
-                         num_image=256, target_size=(256, 64), filename='raw_10_{:04d}.tif')
+# # Predict ZY
+# testGene = testGenerator(os.path.join(dataset_folder, 'em_test/crop_256/raw_zy_10/'),
+#                          num_image=256, target_size=(256, 64), filename='raw_10_{:04d}.tif')
+# model = unet(input_size=(256, 64, 1))
+# model.load_weights(os.path.join(experiment_folder, 'unet_membrane_zy.h5'))
+# results = model.predict_generator(testGene, 256, verbose=1)
+# if not os.path.exists(os.path.join(experiment_folder, 'result_unet_zy_10')):
+#     os.mkdir(os.path.join(experiment_folder, 'result_unet_zy_10'))
+# saveResult(os.path.join(experiment_folder, 'result_unet_zy_10'), results)
+
+
+# Predict train cubes 00 and 11 (Those that were not trained on for these networks)
+# XY 00
+testGene = testGenerator(os.path.join(dataset_folder, 'em_gt/crop_256/xy/raw_xy_00/'),
+                         num_image=64, target_size=(256, 256), filename='raw_00_{:04d}.tif')
+model = unet(input_size=(256, 256, 1))
+model.load_weights(os.path.join(experiment_folder, 'unet_membrane_xy.h5'))
+results = model.predict_generator(testGene, 64, verbose=1)
+if not os.path.exists(os.path.join(experiment_folder, 'result_unet_train_xy_00')):
+    os.mkdir(os.path.join(experiment_folder, 'result_unet_train_xy_00'))
+saveResult(os.path.join(experiment_folder, 'result_unet_train_xy_00'), results)
+# XY 11
+testGene = testGenerator(os.path.join(dataset_folder, 'em_gt/crop_256/xy/raw_xy_11/'),
+                         num_image=64, target_size=(256, 256), filename='raw_11_{:04d}.tif')
+model = unet(input_size=(256, 256, 1))
+model.load_weights(os.path.join(experiment_folder, 'unet_membrane_xy.h5'))
+results = model.predict_generator(testGene, 64, verbose=1)
+if not os.path.exists(os.path.join(experiment_folder, 'result_unet_train_xy_11')):
+    os.mkdir(os.path.join(experiment_folder, 'result_unet_train_xy_11'))
+saveResult(os.path.join(experiment_folder, 'result_unet_train_xy_11'), results)
+# XZ 00
+testGene = testGenerator(os.path.join(dataset_folder, 'em_gt/crop_256/xz/raw_xz_00/'),
+                         num_image=256, target_size=(64, 256), filename='raw_00_{:04d}.tif')
+model = unet(input_size=(64, 256, 1))
+model.load_weights(os.path.join(experiment_folder, 'unet_membrane_xz.h5'))
+results = model.predict_generator(testGene, 256, verbose=1)
+if not os.path.exists(os.path.join(experiment_folder, 'result_unet_train_xz_00')):
+    os.mkdir(os.path.join(experiment_folder, 'result_unet_train_xz_00'))
+saveResult(os.path.join(experiment_folder, 'result_unet_train_xz_00'), results)
+# XZ 11
+testGene = testGenerator(os.path.join(dataset_folder, 'em_gt/crop_256/xz/raw_xz_11/'),
+                         num_image=256, target_size=(64, 256), filename='raw_11_{:04d}.tif')
+model = unet(input_size=(64, 256, 1))
+model.load_weights(os.path.join(experiment_folder, 'unet_membrane_xz.h5'))
+results = model.predict_generator(testGene, 256, verbose=1)
+if not os.path.exists(os.path.join(experiment_folder, 'result_unet_train_xz_11')):
+    os.mkdir(os.path.join(experiment_folder, 'result_unet_train_xz_11'))
+saveResult(os.path.join(experiment_folder, 'result_unet_train_xz_11'), results)
+# ZY 00
+testGene = testGenerator(os.path.join(dataset_folder, 'em_gt/crop_256/zy/raw_zy_00/'),
+                         num_image=256, target_size=(256, 64), filename='raw_00_{:04d}.tif')
 model = unet(input_size=(256, 64, 1))
 model.load_weights(os.path.join(experiment_folder, 'unet_membrane_zy.h5'))
 results = model.predict_generator(testGene, 256, verbose=1)
-if not os.path.exists(os.path.join(experiment_folder, 'result_unet_zy_10')):
-    os.mkdir(os.path.join(experiment_folder, 'result_unet_zy_10'))
-saveResult(os.path.join(experiment_folder, 'result_unet_zy_10'), results)
+if not os.path.exists(os.path.join(experiment_folder, 'result_unet_train_zy_00')):
+    os.mkdir(os.path.join(experiment_folder, 'result_unet_train_zy_00'))
+saveResult(os.path.join(experiment_folder, 'result_unet_train_zy_00'), results)
+# ZY 11
+testGene = testGenerator(os.path.join(dataset_folder, 'em_gt/crop_256/zy/raw_zy_11/'),
+                         num_image=256, target_size=(256, 64), filename='raw_11_{:04d}.tif')
+model = unet(input_size=(256, 64, 1))
+model.load_weights(os.path.join(experiment_folder, 'unet_membrane_zy.h5'))
+results = model.predict_generator(testGene, 256, verbose=1)
+if not os.path.exists(os.path.join(experiment_folder, 'result_unet_train_zy_11')):
+    os.mkdir(os.path.join(experiment_folder, 'result_unet_train_zy_11'))
+saveResult(os.path.join(experiment_folder, 'result_unet_train_zy_11'), results)
